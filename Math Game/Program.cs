@@ -136,6 +136,7 @@ int selectDifficulty()
     }
     return difficulty;
 }
+
 int[] makeAdditionProblem(int difficulty)
 {
     Random num = new();
@@ -146,6 +147,7 @@ int[] makeAdditionProblem(int difficulty)
     Console.WriteLine($"{problem[0]} + {problem[1]}");
     return problem;
 }
+
 int[] makeSubtractionProblem(int difficulty)
 {
     Random num = new();
@@ -162,6 +164,7 @@ int[] makeSubtractionProblem(int difficulty)
     Console.WriteLine($"{problem[0]} - {problem[1]}");
     return problem;
 }
+
 int[] makeMultiplicationProblem(int difficulty)
 {
     Random num = new();
@@ -172,6 +175,7 @@ int[] makeMultiplicationProblem(int difficulty)
     Console.WriteLine($"{problem[0]} * {problem[1]}");
     return problem;
 }
+
 int[] makeDivisionProblem(int difficulty)
 {
     Random num = new();
