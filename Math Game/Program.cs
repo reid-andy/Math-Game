@@ -22,16 +22,16 @@ void mainMenu()
         switch (userInput.ToLower())
         {
             case "1":
-                additionGame();
+                startGame("+");
                 break;
             case "2":
-                subtractionGame();
+                startGame("-");
                 break;
             case "3":
-                multiplicationGame();
+                startGame("*");
                 break;
             case "4":
-                divisionGame();
+                startGame("/");
                 break;
             case "5":
                 viewScoreboard();
@@ -95,130 +95,82 @@ void showEndgame(int score)
     Console.ReadKey();
 }
 
-void additionGame()
+int[] makeAdditionProblem()
 {
-    int score = 0;
-    for (int i = 0; i < 10; i++)
+    Random num = new();
+    int value1 = num.Next(1, 11);
+    int value2 = num.Next(1, 11);
+    int answer = value1 + value2;
+    int[] problem = new int[] { value1, value2, answer };
+    Console.WriteLine($"{problem[0]} + {problem[1]}");
+    return problem;
+}
+int[] makeSubtractionProblem()
+{
+    Random num = new();
+    int value1 = num.Next(1, 11);
+    int value2 = num.Next(1, 11);
+    if (value1 < value2)
     {
-        userInput = "";
-        Console.Clear();
-        int[] problem = makeAdditionProblem();
-        Console.WriteLine($"{problem[0]} + {problem[1]}");
-        userInput = Console.ReadLine();
-        int.TryParse(userInput, out int userAnswer);
-        if (userAnswer == problem[2])
-        {
-            score++;
-        }
+        int holder = value1;
+        value1 = value2;
+        value2 = holder;
     }
-
-    int[] makeAdditionProblem()
-    {
-        Random num = new();
-        int value1 = num.Next(1, 11);
-        int value2 = num.Next(1, 11);
-        int answer = value1 + value2;
-        int[] problem = new int[] { value1, value2, answer };
-        return problem;
-
-    }
-    showEndgame(score);
-    mainMenu();
+    int answer = value1 - value2;
+    int[] problem = new int[] { value1, value2, answer };
+    Console.WriteLine($"{problem[0]} - {problem[1]}");
+    return problem;
+}
+int[] makeMultiplicationProblem()
+{
+    Random num = new();
+    int value1 = num.Next(1, 11);
+    int value2 = num.Next(1, 11);
+    int answer = value1 * value2;
+    int[] problem = new int[] { value1, value2, answer };
+    Console.WriteLine($"{problem[0]} * {problem[1]}");
+    return problem;
+}
+int[] makeDivisionProblem()
+{
+    Random num = new();
+    int answer = num.Next(1, 11);
+    int value2 = num.Next(1, 11);
+    int value1 = value2 * answer;
+    int[] problem = new int[] { value1, value2, answer };
+    Console.WriteLine($"{problem[0]} / {problem[1]}");
+    return problem;
 }
 
-void subtractionGame()
+void startGame(string gameMode)
 {
     int score = 0;
+    int[] problem = new int[3];
     for (int i = 0; i < 10; i++)
     {
         userInput = "";
         Console.Clear();
-        int[] problem = makeSubtractionProblem();
-        Console.WriteLine($"{problem[0]} - {problem[1]}");
+        switch (gameMode)
+        {
+            case "+":
+                problem = makeAdditionProblem();
+                break;
+            case "-":
+                problem = makeSubtractionProblem();
+                break;
+            case "*":
+                problem = makeMultiplicationProblem();
+                break;
+            case "/":
+                problem = makeDivisionProblem();
+                break;
+        }
         userInput = Console.ReadLine();
         int.TryParse(userInput, out int userAnswer);
         if (userAnswer == problem[2])
         {
             score++;
         }
-    }
-
-    int[] makeSubtractionProblem()
-    {
-        Random num = new();
-        int value1 = num.Next(1, 11);
-        int value2 = num.Next(1, 11);
-        if (value1 < value2)
-        {
-            int holder = value1;
-            value1 = value2;
-            value2 = holder;
-        }
-        int answer = value1 - value2;
-        int[] problem = new int[] { value1, value2, answer };
-        return problem;
-
-    }
-    showEndgame(score);
-    mainMenu();
-}
-
-void multiplicationGame()
-{
-    int score = 0;
-    for (int i = 0; i < 10; i++)
-    {
-        userInput = "";
-        Console.Clear();
-        int[] problem = makeMultiplicationProblem();
-        Console.WriteLine($"{problem[0]} * {problem[1]}");
-        userInput = Console.ReadLine();
-        int.TryParse(userInput, out int userAnswer);
-        if (userAnswer == problem[2])
-        {
-            score++;
-        }
-    }
-
-    int[] makeMultiplicationProblem()
-    {
-        Random num = new();
-        int value1 = num.Next(1, 11);
-        int value2 = num.Next(1, 11);
-        int answer = value1 * value2;
-        int[] problem = new int[] { value1, value2, answer };
-        return problem;
-
-    }
-    showEndgame(score);
-    mainMenu();
-}
-
-void divisionGame()
-{
-    int score = 0;
-    for (int i = 0; i < 10; i++)
-    {
-        userInput = "";
-        Console.Clear();
-        int[] problem = makeDivisionProblem();
-        Console.WriteLine($"{problem[0]} / {problem[1]}");
-        userInput = Console.ReadLine();
-        int.TryParse(userInput, out int userAnswer);
-        if (userAnswer == problem[2])
-        {
-            score++;
-        }
-    }
-
-    int[] makeDivisionProblem()
-    {
-        Random num = new();
-        int answer = num.Next(1, 11);
-        int value2 = num.Next(1, 11);
-        int value1 = value2 * answer;
-        int[] problem = new int[] { value1, value2, answer };
-        return problem;
     }
     showEndgame(score);
     mainMenu();
