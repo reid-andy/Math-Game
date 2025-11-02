@@ -1,4 +1,6 @@
-﻿string userInput = "";
+﻿using System.Diagnostics;
+
+string userInput = "";
 List<int> scoreboard = new List<int>();
 
 mainMenu();
@@ -76,9 +78,9 @@ void viewScoreboard()
     mainMenu();
 }
 
-void showEndgame(int score)
+void showEndgame(int score, int totalTime)
 {
-    Console.WriteLine($"You scored {score}");
+    Console.WriteLine($"You scored {score} in {totalTime} seconds");
     trackScore(score);
     Thread.Sleep(1000);
     if (score == 10)
@@ -119,7 +121,7 @@ int selectDifficulty()
                 difficulty = 12;
                 break;
             case "4":
-                difficulty = 9001;
+                difficulty = 901;
                 break;
             default:
                 userInput = "";
@@ -205,7 +207,8 @@ void startGame(string gameMode)
     int score = 0;
     int[] problem = new int[3];
     int difficulty = selectDifficulty();
-
+    Stopwatch timer = new Stopwatch();
+    timer.Start();
     for (int i = 0; i < 10; i++)
     {
         userInput = "";
@@ -235,6 +238,9 @@ void startGame(string gameMode)
             score++;
         }
     }
-    showEndgame(score);
+    timer.Stop();
+    TimeSpan totalTime = timer.Elapsed;
+    int totalTimeInSeconds = (int)totalTime.TotalSeconds;
+    showEndgame(score, totalTimeInSeconds);
     mainMenu();
 }
