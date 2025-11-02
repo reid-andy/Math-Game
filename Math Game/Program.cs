@@ -95,21 +95,53 @@ void showEndgame(int score)
     Console.ReadKey();
 }
 
-int[] makeAdditionProblem()
+int selectDifficulty()
+{
+    userInput = "";
+    int difficulty = 1;
+    while (userInput == "")
+    {
+        Console.Clear();
+        Console.WriteLine("Choose your difficulty:\n1. Easy\n2. Medium\n3. Hard\n4. Ridiculous");
+        userInput = Console.ReadLine();
+        switch (userInput)
+        {
+            case "1":
+                difficulty = 1;
+                break;
+            case "2":
+                difficulty = 5;
+                break;
+            case "3":
+                difficulty = 12;
+                break;
+            case "4":
+                difficulty = 9001;
+                break;
+            default:
+                userInput = "";
+                break;
+
+        }
+    }
+    return difficulty;
+}
+
+int[] makeAdditionProblem(int difficulty)
 {
     Random num = new();
-    int value1 = num.Next(1, 11);
-    int value2 = num.Next(1, 11);
+    int value1 = num.Next(difficulty, difficulty * 10);
+    int value2 = num.Next(difficulty, difficulty * 10);
     int answer = value1 + value2;
     int[] problem = new int[] { value1, value2, answer };
     Console.WriteLine($"{problem[0]} + {problem[1]}");
     return problem;
 }
-int[] makeSubtractionProblem()
+int[] makeSubtractionProblem(int difficulty)
 {
     Random num = new();
-    int value1 = num.Next(1, 11);
-    int value2 = num.Next(1, 11);
+    int value1 = num.Next(difficulty, difficulty * 10);
+    int value2 = num.Next(difficulty, difficulty * 10);
     if (value1 < value2)
     {
         int holder = value1;
@@ -121,21 +153,21 @@ int[] makeSubtractionProblem()
     Console.WriteLine($"{problem[0]} - {problem[1]}");
     return problem;
 }
-int[] makeMultiplicationProblem()
+int[] makeMultiplicationProblem(int difficulty)
 {
     Random num = new();
-    int value1 = num.Next(1, 11);
-    int value2 = num.Next(1, 11);
+    int value1 = num.Next(difficulty, difficulty * 10);
+    int value2 = num.Next(difficulty, difficulty * 10);
     int answer = value1 * value2;
     int[] problem = new int[] { value1, value2, answer };
     Console.WriteLine($"{problem[0]} * {problem[1]}");
     return problem;
 }
-int[] makeDivisionProblem()
+int[] makeDivisionProblem(int difficulty)
 {
     Random num = new();
-    int answer = num.Next(1, 11);
-    int value2 = num.Next(1, 11);
+    int answer = num.Next(difficulty, difficulty * 10);
+    int value2 = num.Next(difficulty, difficulty * 10);
     int value1 = value2 * answer;
     int[] problem = new int[] { value1, value2, answer };
     Console.WriteLine($"{problem[0]} / {problem[1]}");
@@ -146,6 +178,8 @@ void startGame(string gameMode)
 {
     int score = 0;
     int[] problem = new int[3];
+    int difficulty = selectDifficulty();
+
     for (int i = 0; i < 10; i++)
     {
         userInput = "";
@@ -153,16 +187,16 @@ void startGame(string gameMode)
         switch (gameMode)
         {
             case "+":
-                problem = makeAdditionProblem();
+                problem = makeAdditionProblem(difficulty);
                 break;
             case "-":
-                problem = makeSubtractionProblem();
+                problem = makeSubtractionProblem(difficulty);
                 break;
             case "*":
-                problem = makeMultiplicationProblem();
+                problem = makeMultiplicationProblem(difficulty);
                 break;
             case "/":
-                problem = makeDivisionProblem();
+                problem = makeDivisionProblem(difficulty);
                 break;
         }
         userInput = Console.ReadLine();
