@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 
 string userInput = "";
-List<int> scoreboard = new List<int>();
+List<string> scoreboard = new List<string>();
+string difficultyString = "";
 
 mainMenu();
 
@@ -24,19 +25,19 @@ void mainMenu()
         switch (userInput.ToLower())
         {
             case "1":
-                startGame("+");
+                startGame("Addition");
                 break;
             case "2":
-                startGame("-");
+                startGame("Subtraction");
                 break;
             case "3":
-                startGame("*");
+                startGame("Multiplication");
                 break;
             case "4":
-                startGame("/");
+                startGame("Division");
                 break;
             case "5":
-                startGame("random");
+                startGame("Random");
                 break;
             case "9":
                 viewScoreboard();
@@ -54,14 +55,15 @@ void mainMenu()
 
 }
 
-void trackScore(int score)
+void trackScore(int score, int totalTimeInSeconds, string gameMode, int difficulty)
 {
-    scoreboard.Add(score);
+    string scoreboardString = $"{score}\t{totalTimeInSeconds}s\t{gameMode}\t{difficulty}";
+    scoreboard.Add(scoreboardString);
 }
 void viewScoreboard()
 {
     Console.Clear();
-    Console.WriteLine("Scores:");
+    Console.WriteLine("Score\tTime\tGame Mode\tDifficulty");
     if (scoreboard.Count > 0)
     {
         for (int i = 0; i < scoreboard.Count; i++)
@@ -78,10 +80,10 @@ void viewScoreboard()
     mainMenu();
 }
 
-void showEndgame(int score, int totalTime)
+void showEndgame(int score, int totalTimeInSeconds, string gameMode, int difficulty)
 {
-    Console.WriteLine($"You scored {score} in {totalTime} seconds");
-    trackScore(score);
+    Console.WriteLine($"You scored {score} in {totalTimeInSeconds} seconds");
+    trackScore(score, totalTimeInSeconds, gameMode, difficulty);
     Thread.Sleep(1000);
     if (score == 10)
     {
@@ -113,25 +115,27 @@ int selectDifficulty()
         {
             case "1":
                 difficulty = 1;
+                difficultyString = "Easy";
                 break;
             case "2":
                 difficulty = 5;
+                difficultyString = "Medium";
                 break;
             case "3":
                 difficulty = 12;
+                difficultyString = "Hard";
                 break;
             case "4":
                 difficulty = 901;
+                difficultyString = "Ridiculous";
                 break;
             default:
                 userInput = "";
                 break;
-
         }
     }
     return difficulty;
 }
-
 int[] makeAdditionProblem(int difficulty)
 {
     Random num = new();
@@ -215,19 +219,19 @@ void startGame(string gameMode)
         Console.Clear();
         switch (gameMode)
         {
-            case "+":
+            case "Addition":
                 problem = makeAdditionProblem(difficulty);
                 break;
-            case "-":
+            case "Subtraction":
                 problem = makeSubtractionProblem(difficulty);
                 break;
-            case "*":
+            case "Multiplication":
                 problem = makeMultiplicationProblem(difficulty);
                 break;
-            case "/":
+            case "Division":
                 problem = makeDivisionProblem(difficulty);
                 break;
-            case "random":
+            case "Random":
                 problem = makeRandomProblem(difficulty);
                 break;
         }
@@ -241,6 +245,6 @@ void startGame(string gameMode)
     timer.Stop();
     TimeSpan totalTime = timer.Elapsed;
     int totalTimeInSeconds = (int)totalTime.TotalSeconds;
-    showEndgame(score, totalTimeInSeconds);
+    showEndgame(score, totalTimeInSeconds, gameMode, difficulty);
     mainMenu();
 }
