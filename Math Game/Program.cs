@@ -37,7 +37,7 @@ void mainMenu()
                 startGame("Division");
                 break;
             case "5":
-                startGame("Random");
+                startGame("Random  ");
                 break;
             case "9":
                 viewScoreboard();
@@ -55,9 +55,9 @@ void mainMenu()
 
 }
 
-void trackScore(int score, int totalTimeInSeconds, string gameMode, int difficulty)
+void trackScore(int score, int totalTimeInSeconds, string gameMode, string difficultyString)
 {
-    string scoreboardString = $"{score}\t{totalTimeInSeconds}s\t{gameMode}\t{difficulty}";
+    string scoreboardString = $"{score}\t{totalTimeInSeconds}s\t{gameMode}\t{difficultyString}";
     scoreboard.Add(scoreboardString);
 }
 void viewScoreboard()
@@ -83,7 +83,7 @@ void viewScoreboard()
 void showEndgame(int score, int totalTimeInSeconds, string gameMode, int difficulty)
 {
     Console.WriteLine($"You scored {score} in {totalTimeInSeconds} seconds");
-    trackScore(score, totalTimeInSeconds, gameMode, difficulty);
+    trackScore(score, totalTimeInSeconds, gameMode, difficultyString);
     Thread.Sleep(1000);
     if (score == 10)
     {
@@ -231,7 +231,7 @@ void startGame(string gameMode)
             case "Division":
                 problem = makeDivisionProblem(difficulty);
                 break;
-            case "Random":
+            case "Random  ":
                 problem = makeRandomProblem(difficulty);
                 break;
         }
