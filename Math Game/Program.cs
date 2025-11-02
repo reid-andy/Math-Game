@@ -8,7 +8,7 @@ void writeWelcome()
     Console.Clear();
     Console.WriteLine("Welcome to Math Game!");
     Console.WriteLine("Pick a game:");
-    Console.WriteLine("1. Addition\n2. Subtraction\n3. Multiplication\n4. Division\n5. Scoreboard\n\nq to Quit");
+    Console.WriteLine("1. Addition\n2. Subtraction\n3. Multiplication\n4. Division\n5. Random\n9. Scoreboard\n\nq to Quit");
 }
 
 void mainMenu()
@@ -34,6 +34,9 @@ void mainMenu()
                 startGame("/");
                 break;
             case "5":
+                startGame("random");
+                break;
+            case "9":
                 viewScoreboard();
                 break;
             case "q":
@@ -174,6 +177,29 @@ int[] makeDivisionProblem(int difficulty)
     return problem;
 }
 
+int[] makeRandomProblem(int difficulty)
+{
+    Random spinner = new();
+    int selection = spinner.Next(1, 5);
+    int[] problem = new int[3];
+    switch (selection)
+    {
+        case 1:
+            problem = makeAdditionProblem(difficulty);
+            break;
+        case 2:
+            problem = makeSubtractionProblem(difficulty);
+            break;
+        case 3:
+            problem = makeMultiplicationProblem(difficulty);
+            break;
+        case 4:
+            problem = makeDivisionProblem(difficulty);
+            break;
+    }
+    return problem;
+}
+
 void startGame(string gameMode)
 {
     int score = 0;
@@ -197,6 +223,9 @@ void startGame(string gameMode)
                 break;
             case "/":
                 problem = makeDivisionProblem(difficulty);
+                break;
+            case "random":
+                problem = makeRandomProblem(difficulty);
                 break;
         }
         userInput = Console.ReadLine();
