@@ -6,7 +6,7 @@ string difficultyString = "";
 
 MainMenu();
 
-void writeWelcome()
+void WriteWelcome()
 {
     Console.Clear();
     Console.WriteLine("Welcome to Math Game!");
@@ -17,7 +17,7 @@ void writeWelcome()
 void MainMenu()
 {
     userInput = "";
-    writeWelcome();
+    WriteWelcome();
     while (userInput == "")
     {
         userInput = Console.ReadLine();
@@ -25,22 +25,22 @@ void MainMenu()
         switch (userInput.ToLower())
         {
             case "1":
-                startGame("Addition");
+                StartGame("Addition");
                 break;
             case "2":
-                startGame("Subtraction");
+                StartGame("Subtraction");
                 break;
             case "3":
-                startGame("Multiplication");
+                StartGame("Multiplication");
                 break;
             case "4":
-                startGame("Division");
+                StartGame("Division");
                 break;
             case "5":
-                startGame("Random  ");
+                StartGame("Random  ");
                 break;
             case "9":
-                viewScoreboard();
+                ViewScoreboard();
                 break;
             case "q":
                 Environment.Exit(0);
@@ -48,7 +48,7 @@ void MainMenu()
             default:
                 Console.WriteLine("Invalid input");
                 userInput = "";
-                writeWelcome();
+                WriteWelcome();
                 break;
         }
     }
@@ -60,7 +60,7 @@ void TrackScore(int score, int totalTimeInSeconds, string gameMode, string diffi
     string scoreboardString = $"{score}\t{totalTimeInSeconds}s\t{gameMode}\t{difficultyString}";
     scoreboard.Add(scoreboardString);
 }
-void viewScoreboard()
+void ViewScoreboard()
 {
     Console.Clear();
     Console.WriteLine("Score\tTime\tGame Mode\tDifficulty");
@@ -102,7 +102,7 @@ void ShowEndgame(int score, int totalTimeInSeconds, string gameMode)
     Console.ReadKey();
 }
 
-int selectDifficulty()
+int SelectDifficulty()
 {
     userInput = "";
     int difficulty = 1;
@@ -137,7 +137,7 @@ int selectDifficulty()
     return difficulty;
 }
 
-int[] makeAdditionProblem(int difficulty)
+int[] MakeAdditionProblem(int difficulty)
 {
     Random num = new();
     int value1 = num.Next(difficulty, difficulty * 10);
@@ -148,7 +148,7 @@ int[] makeAdditionProblem(int difficulty)
     return problem;
 }
 
-int[] makeSubtractionProblem(int difficulty)
+int[] MakeSubtractionProblem(int difficulty)
 {
     Random num = new();
     int value1 = num.Next(difficulty, difficulty * 10);
@@ -165,7 +165,7 @@ int[] makeSubtractionProblem(int difficulty)
     return problem;
 }
 
-int[] makeMultiplicationProblem(int difficulty)
+int[] MakeMultiplicationProblem(int difficulty)
 {
     Random num = new();
     int value1 = num.Next(difficulty, difficulty * 10);
@@ -195,13 +195,13 @@ int[] MakeRandomProblem(int difficulty)
     switch (selection)
     {
         case 1:
-            problem = makeAdditionProblem(difficulty);
+            problem = MakeAdditionProblem(difficulty);
             break;
         case 2:
-            problem = makeSubtractionProblem(difficulty);
+            problem = MakeSubtractionProblem(difficulty);
             break;
         case 3:
-            problem = makeMultiplicationProblem(difficulty);
+            problem = MakeMultiplicationProblem(difficulty);
             break;
         case 4:
             problem = MakeDivisionProblem(difficulty);
@@ -210,11 +210,11 @@ int[] MakeRandomProblem(int difficulty)
     return problem;
 }
 
-void startGame(string gameMode)
+void StartGame(string gameMode)
 {
     int score = 0;
     int[] problem = new int[3];
-    int difficulty = selectDifficulty();
+    int difficulty = SelectDifficulty();
     Stopwatch timer = new Stopwatch();
     timer.Start();
     for (int i = 0; i < 10; i++)
@@ -224,13 +224,13 @@ void startGame(string gameMode)
         switch (gameMode)
         {
             case "Addition":
-                problem = makeAdditionProblem(difficulty);
+                problem = MakeAdditionProblem(difficulty);
                 break;
             case "Subtraction":
-                problem = makeSubtractionProblem(difficulty);
+                problem = MakeSubtractionProblem(difficulty);
                 break;
             case "Multiplication":
-                problem = makeMultiplicationProblem(difficulty);
+                problem = MakeMultiplicationProblem(difficulty);
                 break;
             case "Division":
                 problem = MakeDivisionProblem(difficulty);
