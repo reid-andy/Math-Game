@@ -4,7 +4,7 @@ string userInput = "";
 List<string> scoreboard = new List<string>();
 string difficultyString = "";
 
-mainMenu();
+MainMenu();
 
 void writeWelcome()
 {
@@ -14,7 +14,7 @@ void writeWelcome()
     Console.WriteLine("1. Addition\n2. Subtraction\n3. Multiplication\n4. Division\n5. Random\n9. Scoreboard\n\nq to Quit");
 }
 
-void mainMenu()
+void MainMenu()
 {
     userInput = "";
     writeWelcome();
@@ -55,7 +55,7 @@ void mainMenu()
 
 }
 
-void trackScore(int score, int totalTimeInSeconds, string gameMode, string difficultyString)
+void TrackScore(int score, int totalTimeInSeconds, string gameMode, string difficultyString)
 {
     string scoreboardString = $"{score}\t{totalTimeInSeconds}s\t{gameMode}\t{difficultyString}";
     scoreboard.Add(scoreboardString);
@@ -77,13 +77,13 @@ void viewScoreboard()
     }
     Console.WriteLine("\nPress any key to return to the main menu.");
     Console.ReadKey();
-    mainMenu();
+    MainMenu();
 }
 
-void showEndgame(int score, int totalTimeInSeconds, string gameMode, int difficulty)
+void ShowEndgame(int score, int totalTimeInSeconds, string gameMode)
 {
     Console.WriteLine($"You scored {score} in {totalTimeInSeconds} seconds");
-    trackScore(score, totalTimeInSeconds, gameMode, difficultyString);
+    TrackScore(score, totalTimeInSeconds, gameMode, difficultyString);
     Thread.Sleep(1000);
     if (score == 10)
     {
@@ -176,7 +176,7 @@ int[] makeMultiplicationProblem(int difficulty)
     return problem;
 }
 
-int[] makeDivisionProblem(int difficulty)
+int[] MakeDivisionProblem(int difficulty)
 {
     Random num = new();
     int answer = num.Next(difficulty, difficulty * 10);
@@ -187,7 +187,7 @@ int[] makeDivisionProblem(int difficulty)
     return problem;
 }
 
-int[] makeRandomProblem(int difficulty)
+int[] MakeRandomProblem(int difficulty)
 {
     Random spinner = new();
     int selection = spinner.Next(1, 5);
@@ -204,7 +204,7 @@ int[] makeRandomProblem(int difficulty)
             problem = makeMultiplicationProblem(difficulty);
             break;
         case 4:
-            problem = makeDivisionProblem(difficulty);
+            problem = MakeDivisionProblem(difficulty);
             break;
     }
     return problem;
@@ -233,10 +233,10 @@ void startGame(string gameMode)
                 problem = makeMultiplicationProblem(difficulty);
                 break;
             case "Division":
-                problem = makeDivisionProblem(difficulty);
+                problem = MakeDivisionProblem(difficulty);
                 break;
             case "Random  ":
-                problem = makeRandomProblem(difficulty);
+                problem = MakeRandomProblem(difficulty);
                 break;
         }
         userInput = Console.ReadLine();
@@ -249,6 +249,6 @@ void startGame(string gameMode)
     timer.Stop();
     TimeSpan totalTime = timer.Elapsed;
     int totalTimeInSeconds = (int)totalTime.TotalSeconds;
-    showEndgame(score, totalTimeInSeconds, gameMode, difficulty);
-    mainMenu();
+    ShowEndgame(score, totalTimeInSeconds, gameMode);
+    MainMenu();
 }
